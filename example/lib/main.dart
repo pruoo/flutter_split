@@ -15,9 +15,11 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
+  FlutterSplit flutterSplit = FlutterSplit();
 
   @override
   void initState() {
+    flutterSplit.initializeSdk();
     super.initState();
     initPlatformState();
   }
@@ -49,8 +51,14 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text('Running on: $_platformVersion\n'),
+            FlatButton(onPressed: ()async{
+              print(await flutterSplit.getTreatment('', {}));
+            }, child: Text('treamtemt'))
+          ],
         ),
       ),
     );
