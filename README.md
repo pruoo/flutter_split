@@ -1,5 +1,5 @@
 # flutter_split
-An unofficial Flutter plugin for Split Feature Flags, Experimentation + Continuous Delivery
+An unofficial Flutter plugin for Split.io Feature Flags, Experimentation + Continuous Delivery
 
 # Useful Links to get started
 1. [Split Quick Start Guide](https://help.split.io/hc/en-us/categories/360001538132-Getting-Started)
