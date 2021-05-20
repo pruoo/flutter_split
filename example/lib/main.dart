@@ -19,7 +19,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    flutterSplit.initializeSdk();
+    flutterSplit.initializeSdk("18293178372");
     super.initState();
     initPlatformState();
   }
