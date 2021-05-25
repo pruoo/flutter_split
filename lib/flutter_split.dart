@@ -20,7 +20,7 @@ class FlutterSplit {
 
   Future<String>  getTreatment(String key,Map<String,dynamic> attr)async{
     Map<String,dynamic> attributes = {
-      "kes":key,
+      "key":key,
       "attributes":attr
     };
     return await _channel.invokeMethod('getTreatment',attributes);
