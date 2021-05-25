@@ -27,15 +27,11 @@ import io.split.android.client.events.SplitEventTask;
 
 /** FlutterSplitPlugin */
 public class FlutterSplitPlugin implements FlutterPlugin, MethodCallHandler {
-  /// The MethodChannel that will the communication between Flutter and native Android
-  ///
-  /// This local reference serves to register the plugin with the Flutter Engine and unregister it
-  /// when the Flutter Engine is detached from the Activity
+
   private MethodChannel channel;
   private Context appContext;
 
 
-  //"52bo50e6gavj7dpma3b0l5j2vpqep0f146nj"
   private String apikey;
 
   //Split
@@ -54,9 +50,7 @@ public class FlutterSplitPlugin implements FlutterPlugin, MethodCallHandler {
 
   @Override
   public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
-    if (call.method.equals("getPlatformVersion")) {
-      result.success("Android " + android.os.Build.VERSION.RELEASE);
-    }else if(call.method.equals("initializeSdk")){
+    if(call.method.equals("initializeSdk")){
 
       this.apikey = call.argument("appKey");
       SplitClientConfig config = SplitClientConfig.builder().build();

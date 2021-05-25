@@ -7,11 +7,6 @@ class FlutterSplit {
   static const MethodChannel _channel =
       const MethodChannel('flutter_split');
 
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
-
   Future<void> initializeSdk(String appKey)async{
     Map<String,dynamic> attr = {};
     attr['appKey'] = appKey;
