@@ -93,7 +93,7 @@ public class FlutterSplitPlugin implements FlutterPlugin, MethodCallHandler {
       HashMap<String,Object> attr = call.argument("attributes");
       if(this.client!=null){
           SplitResult treatment = client.getTreatmentWithConfig(key,attr);
-          HashMap<String,Object> map = new HashMap<>();
+          Map<String,Object> map = new HashMap<>();
           map.put("config",treatment.config());
           map.put("treatment",treatment.treatment());
           result.success(map);
