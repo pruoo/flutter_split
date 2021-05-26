@@ -21,6 +21,7 @@ import io.split.android.client.SplitClient;
 import io.split.android.client.SplitClientConfig;
 import io.split.android.client.SplitFactory;
 import io.split.android.client.SplitFactoryBuilder;
+import io.split.android.client.SplitResult;
 import io.split.android.client.api.Key;
 import io.split.android.client.events.SplitEvent;
 import io.split.android.client.events.SplitEventTask;
@@ -91,8 +92,11 @@ public class FlutterSplitPlugin implements FlutterPlugin, MethodCallHandler {
       String key = call.argument("key");
       HashMap<String,Object> attr = call.argument("attributes");
       if(this.client!=null){
-          String treatment = client.getTreatment(key,attr);
-          result.success(treatment);
+          SplitResult treatment = client.getTreatmentWithConfig(key,attr);
+          HashMap<String,Object> map = new HashMap<>();
+          map.put("config",treatment.config());
+          map.put("treatment",treatment.treatment());
+          result.success(map);
       }else{
         result.error(SDK_NOT_INITIALIZED,"Sdk is not initialized","");
       }

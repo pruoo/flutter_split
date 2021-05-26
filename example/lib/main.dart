@@ -18,7 +18,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    flutterSplit.initializeSdk("YOUR KEY");
+    flutterSplit.initializeSdk("YOUR_KEY");
     super.initState();
   }
 

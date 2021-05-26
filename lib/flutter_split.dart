@@ -13,7 +13,7 @@ class FlutterSplit {
     await _channel.invokeMethod('initializeSdk',attr);
   }
 
-  Future<String>  getTreatment(String key,Map<String,dynamic> attr)async{
+  Future<Map<String,dynamic>>  getTreatment(String key,Map<String,dynamic> attr)async{
     Map<String,dynamic> attributes = {
       "key":key,
       "attributes":attr
