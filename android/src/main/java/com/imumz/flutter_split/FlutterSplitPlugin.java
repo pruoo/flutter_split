@@ -92,11 +92,20 @@ public class FlutterSplitPlugin implements FlutterPlugin, MethodCallHandler {
       String key = call.argument("key");
       HashMap<String,Object> attr = call.argument("attributes");
       if(this.client!=null){
-          SplitResult treatment = client.getTreatmentWithConfig(key,attr);
-          Map<String,Object> map = new HashMap<>();
-          map.put("config",treatment.config());
-          map.put("treatment",treatment.treatment());
-          result.success(map);
+          String treatment = client.getTreatment(key,attr);
+          result.success(treatment);
+      }else{
+        result.error(SDK_NOT_INITIALIZED,"Sdk is not initialized","");
+      }
+    }else if(call.method.equals("getTreatmentWithConfig")){
+      String key = call.argument("key");
+      HashMap<String,Object> attr = call.argument("attributes");
+      if(this.client!=null){
+        SplitResult treatment = client.getTreatmentWithConfig(key,attr);
+        Map<String,Object> map = new HashMap<>();
+        map.put("config",treatment.config());
+        map.put("treatment",treatment.treatment());
+        result.success(map);
       }else{
         result.error(SDK_NOT_INITIALIZED,"Sdk is not initialized","");
       }
@@ -106,6 +115,22 @@ public class FlutterSplitPlugin implements FlutterPlugin, MethodCallHandler {
       if(this.client!=null){
         Map<String, String> treatment = client.getTreatments(keys,attr);
         result.success(treatment);
+      }else{
+        result.error(SDK_NOT_INITIALIZED,"Sdk is not initialized","");
+      }
+    }else if(call.method.equals("getTreatmentsWithConfig")){
+      List<String> keys = call.argument("keys");
+      HashMap<String,Object> attr = call.argument("attributes");
+      if(this.client!=null){
+        Map<String, SplitResult> treatment = client.getTreatmentsWithConfig(keys,attr);
+        Map<String,Map<String,Object>> finalResult = new HashMap<>();
+        for (Map.Entry<String,SplitResult> entry : treatment.entrySet()){
+          Map<String,Object> map = new HashMap<>();
+          map.put("config",entry.getValue().config());
+          map.put("treatment",entry.getValue().treatment());
+          finalResult.put(entry.getKey(),map);
+        }
+        result.success(finalResult);
       }else{
         result.error(SDK_NOT_INITIALIZED,"Sdk is not initialized","");
       }

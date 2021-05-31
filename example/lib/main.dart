@@ -18,7 +18,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    flutterSplit.initializeSdk("YOUR_KEY");
+    flutterSplit.initializeSdk("52bo50e6gavj7dpma3b0l5j2vpqep0f146nj");
     super.initState();
   }
 
@@ -36,7 +36,7 @@ class _MyAppState extends State<MyApp> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             FlatButton(onPressed: ()async{
-              print(await flutterSplit.getTreatment('split_name', {
+              print(await flutterSplit.getTreatmentWithConfig('banner_exp', {
               }));
             }, child: Text('treatment'))
           ],
