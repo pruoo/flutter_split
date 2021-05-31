@@ -49,20 +49,29 @@ class FlutterSplit {
       "keys":keys,
       "attributes":attr
     };
-    Map<String,String> data =  await _channel.invokeMethod('getTreatments',attributes);
-    return data;
+    var data =  await _channel.invokeMethod('getTreatments',attributes);
+    Map<String,String> result = Map();
+    for(var key in keys){
+      try{
+        result[key] = data[key];
+      }catch(e){
+      }
+    }
+    return result;
   }
 
-  Future<List<SplitResult>>  getTreatmentsWithConfig(List<String> keys, Map<String,dynamic> attr)async{
+  Future<Map<String,SplitResult>>  getTreatmentsWithConfig(List<String> keys, Map<String,dynamic> attr)async{
     Map<String,dynamic> attributes = {
       "keys":keys,
       "attributes":attr
     };
-    Map<String,dynamic> data =  await _channel.invokeMethod('getTreatments',attributes);
-    List<SplitResult> result = [];
-    data.forEach((key, value) { 
-      result.add(SplitResult.fromJson({'splitName':key,'treatment':value['treatment']}));
+    var data =  await _channel.invokeMethod('getTreatmentsWithConfig',attributes);
+    Map<String,SplitResult> finalResult = Map();
+    data.forEach((key, value) {
+    finalResult[key] = SplitResult.fromJson({'splitName':key,'treatment':value['treatment'],'config':jsonDecode(value['config'])});
     });
+
+    return finalResult;
   }
 
   Future<void> dispose()async{
