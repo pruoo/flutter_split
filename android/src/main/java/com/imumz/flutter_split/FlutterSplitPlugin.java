@@ -34,6 +34,7 @@ public class FlutterSplitPlugin implements FlutterPlugin, MethodCallHandler {
 
 
   private String apikey;
+  private String userId;
 
   //Split
   private SplitClient client;
@@ -57,8 +58,8 @@ public class FlutterSplitPlugin implements FlutterPlugin, MethodCallHandler {
       SplitClientConfig config = SplitClientConfig.builder().build();
 
       // Create a new user key to be evaluated
-      String matchingKey = "key";
-      Key k = new Key(matchingKey);
+      this.userId = call.argument("userId");
+      Key k = new Key(this.userId);
       // Create factory
       SplitFactory splitFactory = null;
       try {
