@@ -1,26 +1,46 @@
 import Flutter
 import Split
 
-public class SplitDelegate : NSObject{
+public class SplitDelegate : NSObject {
     
     private var client: SplitClient?;
     
-    public func initializeSdk(_ appKey :  String, withUser userKey  :Key){
-        //Split Configuration
+    public func initializeSdk(apiKey : String, user : Key, result : @escaping FlutterResult){
+        
+        //Config
         let config = SplitClientConfig()
-        //Split Factory
+        
+        //Factory
         let builder = DefaultSplitFactoryBuilder()
-        let factory = builder.setApiKey(_).setKey(withUser).setConfig(config).build()
-        //Split Client
+        let factory = builder.setApiKey(apiKey).setKey(user).setConfig(config).build()
+        
+        //Client
         client = factory?.client
-        client?.on(event: SplitEvent.sdkReady){
+        
+        self.client?.on(event: SplitEvent.sdkReady){
             result(nil)
             print("!! Split init !!")
         }
-        client?.on(event: SplitEvent.sdkReadyTimedOut) {
+        
+        self.client?.on(event: SplitEvent.sdkReadyTimedOut) {
             result(nil)
             print("!! Split SDK timed out !!")
         }
     }
-
+    
+    
+    public func getTreatment(splitName: String,attributes: [String:Any], result: @escaping FlutterResult){
+        
+        self.client?.on(event: SplitEvent.sdkReady) {
+            let treatment = self.client?.getTreatment(splitName, attributes: attributes)
+            result(treatment)
+        }
+        
+        self.client?.on(event: SplitEvent.sdkReadyTimedOut) {
+            result(nil)
+            print("SDK time out")
+        }
+    }
+    
+    
 }
