@@ -27,7 +27,8 @@ class _MyAppState extends State<MyApp> {
     String platformVersion;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      platformVersion = await FlutterSplit.platformVersion;
+      // platformVersion =
+      await FlutterSplit().initializeSdk("appKey", "uniqueUserId");
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
@@ -37,9 +38,9 @@ class _MyAppState extends State<MyApp> {
     // setState to update our non-existent appearance.
     if (!mounted) return;
 
-    setState(() {
-      _platformVersion = platformVersion;
-    });
+    // setState(() {
+    //   _platformVersion = platformVersion;
+    // });
   }
 
   @override
