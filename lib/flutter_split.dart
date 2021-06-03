@@ -66,7 +66,7 @@ class FlutterSplit {
       finalResult[key] = SplitResult.fromJson({
         'splitName': key,
         'treatment': value['treatment'],
-        'config': data['config'] == null ? null : jsonDecode(data['config'])
+        'config': value['config'] == null ? null : jsonDecode(value['config'])
       });
     });
 
