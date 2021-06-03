@@ -14,33 +14,39 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
+  String _splitStatus = 'Uninitialized.';
+  String _treatment;
+
+  final FlutterSplit flutterSplit = FlutterSplit();
+
+  static const SPLIT_NAME = "example_split_name";
 
   @override
   void initState() {
     super.initState();
-    initPlatformState();
+    initSplitPlugin();
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
+  Future<void> initSplitPlugin() async {
+    //Replace the value with your real key.
+    //The example will not work with the default example key.
+    const SPLIT_API_KEY = 'default_example_key';
+
+    String splitStatus;
+
     try {
-      // platformVersion =
-      await FlutterSplit().initializeSdk("appKey", "uniqueUserId");
+      await flutterSplit.initializeSdk(SPLIT_API_KEY, "uid");
+      splitStatus = 'Initialized';
     } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
+      splitStatus = 'Failed to initialize.';
     }
 
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
     if (!mounted) return;
 
-    // setState(() {
-    //   _platformVersion = platformVersion;
-    // });
+    setState(() {
+      _splitStatus = splitStatus;
+    });
   }
 
   @override
@@ -48,10 +54,38 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('Split.io Flutter Plugin Example'),
         ),
         body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Container(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Split Plugin Status: $_splitStatus\n',
+                    maxLines: 2,
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Treatment for split $SPLIT_NAME: $_treatment\n',
+                    maxLines: 3,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          label: Text('EVALUATE SPLIT'),
+          onPressed: () async {
+            String treatment = await flutterSplit.getTreatment(
+                SPLIT_NAME, {"attribute1": 1, "attribute2": "another-value"});
+            setState(() {
+              _treatment = treatment;
+            });
+          },
         ),
       ),
     );
