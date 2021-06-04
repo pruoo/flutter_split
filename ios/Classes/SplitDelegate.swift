@@ -28,6 +28,11 @@ public class SplitDelegate : NSObject {
         }
     }
     
+    public func dispose(result: @escaping FlutterResult){
+        self.client?.destroy();
+        result(nil);
+    }
+    
     
     public func getTreatment(splitName: String,attributes: [String:Any], result: @escaping FlutterResult){
         
@@ -42,5 +47,22 @@ public class SplitDelegate : NSObject {
         }
     }
     
-    
+    public func getTreatmentWithConfig(splitName: String,attributes: [String:Any], result: @escaping FlutterResult){
+        self.client?.on(event: SplitEvent.sdkReady) {
+            let splitResult = self.client?.getTreatment(splitName, attributes: attributes)
+            let config = try? JSONSerialization.jsonObject(with: splitResult.config.data(using: .utf8)!, options: []) as? [String: Any]
+            let treatment = splitResult.treatment
+            
+            var flutterResult: [String: Any]
+            flutterResult["treatment"]=treatment;
+            flutterResult["config"]=config;
+            
+            result(flutterResult)
+        }
+        
+        self.client?.on(event: SplitEvent.sdkReadyTimedOut) {
+            result(nil)
+            print("SDK time out")
+        }
+    }
 }
