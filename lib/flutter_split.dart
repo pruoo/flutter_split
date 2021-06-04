@@ -89,7 +89,7 @@ class FlutterSplit {
   }
 
   Future<void> dispose() async {
-    await _channel.invokeMethod('dispose');
+    return await _channel.invokeMethod('dispose');
   }
 
   static Future<bool> trackEvent(
