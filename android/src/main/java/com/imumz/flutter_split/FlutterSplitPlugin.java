@@ -76,19 +76,6 @@ public class FlutterSplitPlugin implements FlutterPlugin, MethodCallHandler {
       // Get Split Client instance
       this.client = splitFactory.client();
 
-    }else if(call.method.equals("trackEvent")){
-      String eventType  = call.argument("eventName");
-      HashMap<String,Object> map = new HashMap<String,Object>();
-      if(this.client!=null){
-        boolean res = client.track(eventType,map);
-        if(res){
-          result.success(true);
-        }else{
-
-        }
-      }else{
-        result.error(SDK_NOT_INITIALIZED,"Sdk is not initialized","");
-      }
     }else if(call.method.equals("getTreatment")){
       String key = call.argument("key");
       HashMap<String,Object> attr = call.argument("attributes");
@@ -139,6 +126,16 @@ public class FlutterSplitPlugin implements FlutterPlugin, MethodCallHandler {
       if(this.client!=null){
         this.client.destroy();
         result.success(true);
+      }else{
+        result.error(SDK_NOT_INITIALIZED,"Sdk is not initialized","");
+      }
+    }else if(call.method.equals("trackEvent")){
+      if(this.client!=null){
+        String trafficType = call.argument("trafficType");
+        String eventType = call.argument("eventType");
+        HashMap<String,Object> attr = call.argument("attributes");
+        boolean trackResult = this.client.track(trafficType,eventType,attr);
+        result.success(trackResult);
       }else{
         result.error(SDK_NOT_INITIALIZED,"Sdk is not initialized","");
       }
