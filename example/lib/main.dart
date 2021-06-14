@@ -18,11 +18,14 @@ class _MyAppState extends State<MyApp> {
   String _treatment, _treatmentWithConfig;
   Map<String, dynamic> _config, _treatments, _treatmentsWithConfig;
   bool _eventTracked;
-  final FlutterSplit flutterSplit = FlutterSplit();
 
   static const SPLIT_NAME = "split_name";
   static const SPLIT_NAME_1 = "split_name_1";
   static const EVENT = "example_event";
+  static const TRAFFIC_TYPE = "user";
+
+  //Instantiate the plugin
+  final FlutterSplit flutterSplit = FlutterSplit();
 
   @override
   void initState() {
@@ -30,7 +33,7 @@ class _MyAppState extends State<MyApp> {
     initSplitPlugin();
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
+  // Initialize the [FlutterSplit] instance with API Key and User id
   Future<void> initSplitPlugin() async {
     //Replace the value with your real key.
     //The example will not work with the default example key.
@@ -153,7 +156,8 @@ class _MyAppState extends State<MyApp> {
             FloatingActionButton.extended(
               label: Text('5. TRACK EVENT'),
               onPressed: () async {
-                var result = await flutterSplit.trackEvent(EVENT, {});
+                var result =
+                    await flutterSplit.trackEvent(EVENT, TRAFFIC_TYPE, {});
                 setState(() {
                   _eventTracked = result;
                 });
