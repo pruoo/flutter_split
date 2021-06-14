@@ -35,16 +35,8 @@ public class SplitDelegate : NSObject {
     
     
     public func getTreatment(splitName: String,attributes: [String:Any], result: @escaping FlutterResult){
-        
-        self.client?.on(event: SplitEvent.sdkReady) {
-            let treatment = self.client?.getTreatment(splitName, attributes: attributes)
-            result(treatment)
-        }
-        
-        self.client?.on(event: SplitEvent.sdkReadyTimedOut) {
-            result(nil)
-            print("SDK time out")
-        }
+        let treatment = self.client?.getTreatment(splitName, attributes: attributes)
+        result(treatment)      
     }
     
     public func getTreatmentWithConfig(splitName: String,attributes: [String:Any], result: @escaping FlutterResult){
@@ -62,13 +54,13 @@ public class SplitDelegate : NSObject {
         
     }
     
-      public func getTreatments(splitNames: [String],attributes: [String:Any], result: @escaping FlutterResult){
-    
-    
-                let treatments = self.client?.getTreatments(splits: splitNames, attributes: attributes)
-                result(treatments)
-    
-        }
+    public func getTreatments(splitNames: [String],attributes: [String:Any], result: @escaping FlutterResult){
+        
+        
+        let treatments = self.client?.getTreatments(splits: splitNames, attributes: attributes)
+        result(treatments)
+        
+    }
     
     //     public func getTreatmentsWithConfig(splitNames: String,attributes: [String:Any], result: @escaping FlutterResult){
     
