@@ -79,10 +79,11 @@ public class SwiftFlutterSplitPlugin: NSObject, FlutterPlugin {
         case "trackEvent":
             
             let args = call.arguments as! Dictionary<String, Any>
-            let eventName: String = args["eventName"] as! String
-            let properties: [String:Any] = args["properties"] as! [String:Any]
+            let eventType: String = args["eventType"] as! String
+            let trafficType:  String = args["trafficType"] as! String
+            let properties: [String:Any] = args["attributes"] as! [String:Any]
             
-            // splitDelegate.trackEvent(eventName: eventName,properties: properties,result: result)
+            splitDelegate.trackEvent(eventType: eventType,trafficType: trafficType,properties: properties,result: result)
             break;
             
         default:

@@ -62,23 +62,26 @@ public class SplitDelegate : NSObject {
         
     }
     
-        public func getTreatmentsWithConfig(splitNames: [String],attributes: [String:Any], result: @escaping FlutterResult){
+    public func getTreatmentsWithConfig(splitNames: [String],attributes: [String:Any], result: @escaping FlutterResult){
     
-                let splitResult = self.client?.getTreatmentsWithConfig(splits: splitNames, attributes: attributes)
-                print(splitResult)
+        let splitResult = self.client?.getTreatmentsWithConfig(splits: splitNames, attributes: attributes)
 
         var flutterResult: [String: Any] = [:]
 
-       for split in splitResult!{
+        for split in splitResult!{
             let treatment = split.value.treatment;
             let config = try? JSONSerialization.jsonObject(with: split.value.config!.data(using: .utf8)!, options: []) as? [String: Any]
             
             flutterResult[split.key]=["treatment":treatment,"config":try? String(data:JSONSerialization.data(withJSONObject:config!) as! Data,encoding: .utf8)];
-            
         }
 
-                result(flutterResult)
-        }
+        result(flutterResult)
+    }
+
+    public func trackEvent(eventType: String, trafficType: String, properties: [String:Any], result: @escaping FlutterResult){
+        let response = client?.track(trafficType: trafficType, eventType: eventType, properties: properties)
+        result(response)
+    }
     
     
 }
