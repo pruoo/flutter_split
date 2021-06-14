@@ -11,7 +11,7 @@ class FlutterSplit {
     Map<String, dynamic> attr = {};
     attr['appKey'] = appKey;
     attr['userId'] = userId;
-   return await _channel.invokeMethod('initializeSdk', attr);
+    return await _channel.invokeMethod('initializeSdk', attr);
   }
 
   Future<String> getTreatment(String key, Map<String, dynamic> attr) async {
@@ -92,9 +92,12 @@ class FlutterSplit {
     return await _channel.invokeMethod('dispose');
   }
 
-  static Future<bool> trackEvent(
-      String eventName, Map<String, dynamic> props) async {
-    //TODO: Implement trackEvent
-    return false;
+  Future<bool> trackEvent(
+      String eventType, String trafficType, Map<String, dynamic> props) async {
+    return await _channel.invokeMethod('trackEvent', {
+      'trafficType': trafficType,
+      'eventType': eventType,
+      'attributes': props
+    });
   }
 }
