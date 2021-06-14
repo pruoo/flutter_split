@@ -48,21 +48,41 @@ public class SplitDelegate : NSObject {
     }
     
     public func getTreatmentWithConfig(splitName: String,attributes: [String:Any], result: @escaping FlutterResult){
-        self.client?.on(event: SplitEvent.sdkReady) {
-            let splitResult = self.client?.getTreatment(splitName, attributes: attributes)
-            let config = try? JSONSerialization.jsonObject(with: splitResult.config.data(using: .utf8)!, options: []) as? [String: Any]
-            let treatment = splitResult.treatment
-            
-            var flutterResult: [String: Any]
-            flutterResult["treatment"]=treatment;
-            flutterResult["config"]=config;
-            
-            result(flutterResult)
-        }
         
-        self.client?.on(event: SplitEvent.sdkReadyTimedOut) {
-            result(nil)
-            print("SDK time out")
-        }
+        let splitResult = self.client?.getTreatmentWithConfig(splitName, attributes: attributes)
+        let config = try? JSONSerialization.jsonObject(with: splitResult!.config!.data(using: .utf8)!, options: []) as? [String: Any]
+        let treatment = splitResult?.treatment
+        
+        var flutterResult: [String: Any] = [:]
+        flutterResult["treatment"]=treatment;
+        flutterResult["config"]=try? String(data:JSONSerialization.data(withJSONObject:config!) as! Data,encoding: .utf8);
+        
+        result(flutterResult)
+        
+        
     }
+    
+    //   public func getTreatments(splitNames: [String],attributes: [String:Any], result: @escaping FlutterResult){
+    
+    
+    //             let treatments = self.client?.getTreatments(splits: splitNames, attributes: attributes)
+    //             result(treatments)
+    
+    //     }
+    
+    //     public func getTreatmentsWithConfig(splitNames: String,attributes: [String:Any], result: @escaping FlutterResult){
+    
+    //             let splitResult = self.client?.getTreatmentsWithConfig(splits: splitNames, attributes: attributes)
+    //             let config = try? JSONSerialization.jsonObject(with: splitResult.config.data(using: .utf8)!, options: []) as? [String: Any]
+    //             let treatment = splitResult.treatment
+    
+    //             var flutterResult: [String: Any]
+    //             flutterResult["treatments"]=treatment;
+    //             flutterResult["config"]=config;
+    
+    //             result(flutterResult)
+    
+    //     }
+    
+    
 }
