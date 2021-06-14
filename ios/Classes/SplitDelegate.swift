@@ -62,13 +62,13 @@ public class SplitDelegate : NSObject {
         
     }
     
-    //   public func getTreatments(splitNames: [String],attributes: [String:Any], result: @escaping FlutterResult){
+      public func getTreatments(splitNames: [String],attributes: [String:Any], result: @escaping FlutterResult){
     
     
-    //             let treatments = self.client?.getTreatments(splits: splitNames, attributes: attributes)
-    //             result(treatments)
+                let treatments = self.client?.getTreatments(splits: splitNames, attributes: attributes)
+                result(treatments)
     
-    //     }
+        }
     
     //     public func getTreatmentsWithConfig(splitNames: String,attributes: [String:Any], result: @escaping FlutterResult){
     
