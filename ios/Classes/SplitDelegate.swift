@@ -62,19 +62,23 @@ public class SplitDelegate : NSObject {
         
     }
     
-    //     public func getTreatmentsWithConfig(splitNames: String,attributes: [String:Any], result: @escaping FlutterResult){
+        public func getTreatmentsWithConfig(splitNames: [String],attributes: [String:Any], result: @escaping FlutterResult){
     
-    //             let splitResult = self.client?.getTreatmentsWithConfig(splits: splitNames, attributes: attributes)
-    //             let config = try? JSONSerialization.jsonObject(with: splitResult.config.data(using: .utf8)!, options: []) as? [String: Any]
-    //             let treatment = splitResult.treatment
-    
-    //             var flutterResult: [String: Any]
-    //             flutterResult["treatments"]=treatment;
-    //             flutterResult["config"]=config;
-    
-    //             result(flutterResult)
-    
-    //     }
+                let splitResult = self.client?.getTreatmentsWithConfig(splits: splitNames, attributes: attributes)
+                print(splitResult)
+
+        var flutterResult: [String: Any] = [:]
+
+       for split in splitResult!{
+            let treatment = split.value.treatment;
+            let config = try? JSONSerialization.jsonObject(with: split.value.config!.data(using: .utf8)!, options: []) as? [String: Any]
+            
+            flutterResult[split.key]=["treatment":treatment,"config":try? String(data:JSONSerialization.data(withJSONObject:config!) as! Data,encoding: .utf8)];
+            
+        }
+
+                result(flutterResult)
+        }
     
     
 }
