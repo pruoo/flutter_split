@@ -19,8 +19,8 @@ class _MyAppState extends State<MyApp> {
   Map<String, dynamic> _config, _treatments, _treatmentsWithConfig;
   bool _eventTracked;
 
-  static const SPLIT_NAME = "split_name";
-  static const SPLIT_NAME_1 = "split_name_1";
+  static const SPLIT_NAME_1 = "split_example_1";
+  static const SPLIT_NAME_2 = "split_example_2";
   static const EVENT = "example_event";
   static const TRAFFIC_TYPE = "user";
 
@@ -75,7 +75,7 @@ class _MyAppState extends State<MyApp> {
                 ),
                 SizedBox(height: 16),
                 Text(
-                  '1. Treatment for split $SPLIT_NAME: $_treatment\n',
+                  '1. Treatment for split $SPLIT_NAME_1: $_treatment\n',
                   maxLines: 3,
                 ),
                 SizedBox(height: 8),
@@ -111,8 +111,8 @@ class _MyAppState extends State<MyApp> {
             FloatingActionButton.extended(
               label: Text('1. EVALUATE SPLIT'),
               onPressed: () async {
-                String treatment = await flutterSplit
-                    .getTreatment(SPLIT_NAME, {"userAppPhase": "motherhood"});
+                String treatment =
+                    await flutterSplit.getTreatment(SPLIT_NAME_1, {});
                 setState(() {
                   _treatment = treatment;
                 });
@@ -135,7 +135,7 @@ class _MyAppState extends State<MyApp> {
               label: Text('3. EVALUATE MULTIPLE SPLITS'),
               onPressed: () async {
                 var result = await flutterSplit
-                    .getTreatments([SPLIT_NAME, SPLIT_NAME_1], {});
+                    .getTreatments([SPLIT_NAME_1, SPLIT_NAME_2], {});
                 setState(() {
                   _treatments = result;
                 });
@@ -146,7 +146,7 @@ class _MyAppState extends State<MyApp> {
               label: Text('4. EVALUATE MULTIPLE SPLITS WITH CONFIG'),
               onPressed: () async {
                 var result = await flutterSplit
-                    .getTreatmentsWithConfig([SPLIT_NAME, SPLIT_NAME_1], {});
+                    .getTreatmentsWithConfig([SPLIT_NAME_1, SPLIT_NAME_2], {});
                 setState(() {
                   _treatmentsWithConfig = result;
                 });
