@@ -31,7 +31,7 @@ public class SwiftFlutterSplitPlugin: NSObject, FlutterPlugin {
             break;
             
         case "dispose":
-            // splitDelegate.dispose(result:result)
+            splitDelegate.dispose(result:result)
             break;
             
         case "getTreatment":
@@ -53,7 +53,7 @@ public class SwiftFlutterSplitPlugin: NSObject, FlutterPlugin {
             let splitNames: [String] = args["keys"] as! [String]
             let attributes: [String:Any] = args["attributes"] as! [String:Any]
             
-            // splitDelegate.getTreatments(splitNames: splitNames,attributes: attributes,result: result)
+            splitDelegate.getTreatments(splitNames: splitNames,attributes: attributes,result: result)
             break; 
             
             
@@ -63,7 +63,7 @@ public class SwiftFlutterSplitPlugin: NSObject, FlutterPlugin {
             let splitName: String = args["key"] as! String
             let attributes: [String:Any] = args["attributes"] as! [String:Any]
             
-            // splitDelegate.getTreatmentWithConfig(splitName: splitName,attributes: attributes,result: result)
+            splitDelegate.getTreatmentWithConfig(splitName: splitName,attributes: attributes,result: result)
             break;
             
         case "getTreatmentsWithConfig":
@@ -72,7 +72,7 @@ public class SwiftFlutterSplitPlugin: NSObject, FlutterPlugin {
             let splitNames: [String] = args["keys"] as! [String]
             let attributes: [String:Any] = args["attributes"] as! [String:Any]
             
-            // splitDelegate.getTreatmentsWithConfig(splitNames: splitNames,attributes: attributes,result: result)
+            splitDelegate.getTreatmentsWithConfig(splitNames: splitNames,attributes: attributes,result: result)
             break;
             
             
