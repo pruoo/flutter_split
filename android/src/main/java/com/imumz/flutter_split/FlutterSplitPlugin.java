@@ -76,6 +76,8 @@ public class FlutterSplitPlugin implements FlutterPlugin, MethodCallHandler {
       // Get Split Client instance
       this.client = splitFactory.client();
 
+      result.success(null);
+    
     }else if(call.method.equals("getTreatment")){
       String key = call.argument("key");
       HashMap<String,Object> attr = call.argument("attributes");
