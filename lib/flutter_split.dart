@@ -7,11 +7,15 @@ import 'package:flutter_split/split_result.dart';
 class FlutterSplit {
   static const MethodChannel _channel = const MethodChannel('flutter_split');
 
-  Future<void> initializeSdk(String appKey, String userId) async {
-    Map<String, dynamic> attr = {};
-    attr['appKey'] = appKey;
-    attr['userId'] = userId;
-    await _channel.invokeMethod('initializeSdk', attr);
+  Future<dynamic> initializeSdk(String appKey, String userId) async {
+    try{
+      Map<String, dynamic> attr = {};
+      attr['appKey'] = appKey;
+      attr['userId'] = userId;
+      return await _channel.invokeMethod('initializeSdk', attr);
+    }catch(e){
+      return false;
+    }
   }
 
   Future<String> getTreatment(String key, Map<String, dynamic> attr) async {
@@ -89,12 +93,15 @@ class FlutterSplit {
   }
 
   Future<void> dispose() async {
-    await _channel.invokeMethod('dispose');
+    return await _channel.invokeMethod('dispose');
   }
 
-  static Future<bool> trackEvent(
-      String eventName, Map<String, dynamic> props) async {
-    //TODO: Implement trackEvent
-    return false;
+  Future<bool> trackEvent(
+      String eventType, String trafficType, Map<String, dynamic> props) async {
+    return await _channel.invokeMethod('trackEvent', {
+      'trafficType': trafficType,
+      'eventType': eventType,
+      'attributes': props
+    });
   }
 }
