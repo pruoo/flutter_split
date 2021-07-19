@@ -18,7 +18,7 @@ class FlutterSplit {
     }
   }
 
-  Future<String> getTreatment(String key, Map<String, dynamic> attr) async {
+  Future<String?> getTreatment(String key, Map<String, dynamic> attr) async {
     Map<String, dynamic> attributes = {"key": key, "attributes": attr};
 
     try {
@@ -30,7 +30,7 @@ class FlutterSplit {
     }
   }
 
-  Future<SplitResult> getTreatmentWithConfig(
+  Future<SplitResult?> getTreatmentWithConfig(
       String key, Map<String, dynamic> attr) async {
     Map<String, dynamic> attributes = {"key": key, "attributes": attr};
 
@@ -49,13 +49,13 @@ class FlutterSplit {
     }
   }
 
-  Future<Map<String, String>> getTreatments(
+  Future<Map<String, String?>> getTreatments(
       List<String> keys, Map<String, dynamic> attr) async {
     Map<String, dynamic> attributes = {"keys": keys, "attributes": attr};
 
     var data = await _channel.invokeMethod('getTreatments', attributes);
 
-    Map<String, String> result = Map();
+    Map<String, String?> result = Map();
     for (var key in keys) {
       try {
         result[key] = data[key];
@@ -96,7 +96,7 @@ class FlutterSplit {
     return await _channel.invokeMethod('dispose');
   }
 
-  Future<bool> trackEvent(
+  Future<bool?> trackEvent(
       String eventType, String trafficType, Map<String, dynamic> props) async {
     return await _channel.invokeMethod('trackEvent', {
       'trafficType': trafficType,

@@ -1,7 +1,7 @@
 class SplitResult {
-  String splitName;
-  String treatment;
-  Map<String, dynamic> config;
+  String? splitName;
+  String? treatment;
+  Map<String, dynamic>? config;
 
   SplitResult.fromJson(json) {
     this.splitName = json['splitName'];
