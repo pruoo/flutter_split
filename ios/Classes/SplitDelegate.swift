@@ -18,12 +18,12 @@ public class SplitDelegate : NSObject {
         client = factory?.client
         
         self.client?.on(event: SplitEvent.sdkReady){
-            result(nil)
+            result(true)
             print("!! Split init !!")
         }
         
         self.client?.on(event: SplitEvent.sdkReadyTimedOut) {
-            result(nil)
+            result(false)
             print("!! Split SDK timed out !!")
         }
     }
