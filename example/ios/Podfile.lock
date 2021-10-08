@@ -2,8 +2,8 @@ PODS:
   - Flutter (1.0.0)
   - flutter_split (0.0.1):
     - Flutter
-    - Split (~> 2.11.0)
-  - Split (2.11.1)
+    - Split (~> 2.11.5)
+  - Split (2.11.5)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
@@ -20,9 +20,9 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_split/ios"
 
 SPEC CHECKSUMS:
-  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  flutter_split: f2bbb1b1916c189750fc4d4b0df2ac904d245556
-  Split: 02e9be61e4859c39643b5d4ae350b50a092f2990
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  flutter_split: 714e6a2b83e705a15dfd0b0166ea745f734afa4c
+  Split: 28d583c1414210eb0db44df9d75ae945367f2f0e
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 
