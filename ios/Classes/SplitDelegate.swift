@@ -43,7 +43,7 @@ public class SplitDelegate : NSObject {
         
         let splitResult = self.client?.getTreatmentWithConfig(splitName, attributes: attributes)
 
-        if(splitResult!=nil){
+        if splitResult != nil {
             
             let config = try? JSONSerialization.jsonObject(with: splitResult!.config!.data(using: .utf8)!, options: []) as? [String: Any]
             let treatment = splitResult?.treatment
@@ -72,7 +72,7 @@ public class SplitDelegate : NSObject {
 
         var flutterResult: [String: Any] = [:]
 
-        if(splitResult!=nil){
+        if splitResult != nil {
             
             for split in splitResult!{
             let treatment = split.value.treatment;
