@@ -42,14 +42,19 @@ public class SplitDelegate : NSObject {
     public func getTreatmentWithConfig(splitName: String,attributes: [String:Any], result: @escaping FlutterResult){
         
         let splitResult = self.client?.getTreatmentWithConfig(splitName, attributes: attributes)
-        let config = try? JSONSerialization.jsonObject(with: splitResult!.config!.data(using: .utf8)!, options: []) as? [String: Any]
-        let treatment = splitResult?.treatment
+
+        if(splitResult===nil){
+            result(["treatment":"error"])
+        } else {
+            let config = try? JSONSerialization.jsonObject(with: splitResult!.config!.data(using: .utf8)!, options: []) as? [String: Any]
+            let treatment = splitResult?.treatment
         
-        var flutterResult: [String: Any] = [:]
-        flutterResult["treatment"]=treatment;
-        flutterResult["config"]=try? String(data:JSONSerialization.data(withJSONObject:config!) as! Data,encoding: .utf8);
+            var flutterResult: [String: Any] = [:]
+            flutterResult["treatment"]=treatment;
+            flutterResult["config"]=try? String(data:JSONSerialization.data(withJSONObject:config!) as! Data,encoding: .utf8);
         
-        result(flutterResult)
+            result(flutterResult)
+        }
         
         
     }
@@ -68,14 +73,18 @@ public class SplitDelegate : NSObject {
 
         var flutterResult: [String: Any] = [:]
 
-        for split in splitResult!{
+        if(splitResult===nil){
+            result(["treatment":"error"])
+        } else {
+            for split in splitResult!{
             let treatment = split.value.treatment;
             let config = try? JSONSerialization.jsonObject(with: split.value.config!.data(using: .utf8)!, options: []) as? [String: Any]
             
             flutterResult[split.key]=["treatment":treatment,"config":try? String(data:JSONSerialization.data(withJSONObject:config!) as! Data,encoding: .utf8)];
-        }
+        
+            result(flutterResult)}
 
-        result(flutterResult)
+        }
     }
 
     public func trackEvent(eventType: String, trafficType: String, properties: [String:Any], result: @escaping FlutterResult){
