@@ -47,7 +47,7 @@ public class SplitDelegate : NSObject {
             let treatment = splitResult?.treatment
             let splitConfig = splitResult!.config;
 
-            let config
+            let config : [String: Any]
             if splitConfig != nil {
                 config = try? JSONSerialization.jsonObject(with: splitResult!.config!.data(using: .utf8)!, options: []) as? [String: Any]
             }else{
@@ -86,7 +86,7 @@ public class SplitDelegate : NSObject {
             let treatment = split.value.treatment;
             let splitConfig = split.value.config;
 
-            let config 
+            let config : [String: Any]
             if splitConfig != nil {
                 config = try? JSONSerialization.jsonObject(
                     with: split.value.config!.data(using: .utf8)!, options: []
