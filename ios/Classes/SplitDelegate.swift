@@ -49,7 +49,12 @@ public class SplitDelegate : NSObject {
 
             let config : [String: Any]
             if splitConfig != nil {
-                config = try? JSONSerialization.jsonObject(with: splitResult!.config!.data(using: .utf8)!, options: []) as? [String: Any]
+                do {
+                    config = try JSONSerialization.jsonObject(
+                        with: splitResult!.config!.data(using: .utf8)!, options: []
+                        ) as? [String: Any] ?? [:]
+                } 
+                catch { config = [:]}
             }else{
                 config = [:]
             }
@@ -58,7 +63,7 @@ public class SplitDelegate : NSObject {
         
             var flutterResult: [String: Any] = [:]
             flutterResult["treatment"]=treatment;
-            flutterResult["config"]=try? String(data:JSONSerialization.data(withJSONObject:config!) as! Data,encoding: .utf8);
+            flutterResult["config"]=try? String(data:JSONSerialization.data(withJSONObject:config) as! Data,encoding: .utf8);
         
             result(flutterResult)
         }
@@ -88,16 +93,19 @@ public class SplitDelegate : NSObject {
 
             let config : [String: Any]
             if splitConfig != nil {
-                config = try? JSONSerialization.jsonObject(
-                    with: split.value.config!.data(using: .utf8)!, options: []
-                    ) as? [String: Any]
+                do{
+                    config = try JSONSerialization.jsonObject(
+                        with: split.value.config!.data(using: .utf8)!, options: []
+                        ) as? [String: Any] ?? [:]
+                }
+                catch { config = [:] }
             }
             else{
                 config = [:]
             }
            
             
-            flutterResult[split.key]=["treatment":treatment,"config":try? String(data:JSONSerialization.data(withJSONObject:config!) as! Data,encoding: .utf8)];
+            flutterResult[split.key]=["treatment":treatment,"config":try? String(data:JSONSerialization.data(withJSONObject:config) as! Data,encoding: .utf8)];
         
             result(flutterResult)}
 
