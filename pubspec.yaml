@@ -1,4 +1,4 @@
-name: flutter_split
+name: flutter_split_sdk
 description: An unofficial Flutter plugin for Split.io Feature Flags, Dynamic Configuration, Experimentation + Continuous Delivery.
 version: 0.0.4
 homepage:
