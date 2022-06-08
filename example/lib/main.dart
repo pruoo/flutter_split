@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:flutter_split/flutter_split.dart';
+import 'package:flutter_split_sdk/flutter_split.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,9 +15,9 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _splitStatus = 'Uninitialized.';
-  String _treatment, _treatmentWithConfig;
-  Map<String, dynamic> _config, _treatments, _treatmentsWithConfig;
-  bool _eventTracked;
+  late String _treatment, _treatmentWithConfig;
+  late Map<String, dynamic> _config, _treatments, _treatmentsWithConfig;
+  late bool _eventTracked;
 
   static const SPLIT_NAME_1 = "split_example_1";
   static const SPLIT_NAME_2 = "split_example_2";
@@ -112,7 +112,7 @@ class _MyAppState extends State<MyApp> {
               label: Text('1. EVALUATE SPLIT'),
               onPressed: () async {
                 String treatment =
-                    await flutterSplit.getTreatment(SPLIT_NAME_1, {});
+                    await flutterSplit.getTreatment(SPLIT_NAME_1, {}) ?? '';
                 setState(() {
                   _treatment = treatment;
                 });
@@ -125,8 +125,8 @@ class _MyAppState extends State<MyApp> {
                 var result =
                     await flutterSplit.getTreatmentWithConfig(SPLIT_NAME_1, {});
                 setState(() {
-                  _treatmentWithConfig = result.treatment;
-                  _config = result.config;
+                  _treatmentWithConfig = result?.treatment ?? '';
+                  _config = result?.config ?? {};
                 });
               },
             ),
@@ -159,7 +159,7 @@ class _MyAppState extends State<MyApp> {
                 var result =
                     await flutterSplit.trackEvent(EVENT, TRAFFIC_TYPE, {});
                 setState(() {
-                  _eventTracked = result;
+                  _eventTracked = result ?? false;
                 });
               },
             ),

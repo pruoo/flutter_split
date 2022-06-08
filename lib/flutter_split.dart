@@ -2,18 +2,18 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:flutter_split/split_result.dart';
+import 'package:flutter_split_sdk/split_result.dart';
 
 class FlutterSplit {
   static const MethodChannel _channel = const MethodChannel('flutter_split');
 
   Future<dynamic> initializeSdk(String appKey, String userId) async {
-    try{
+    try {
       Map<String, dynamic> attr = {};
       attr['appKey'] = appKey;
       attr['userId'] = userId;
       return await _channel.invokeMethod('initializeSdk', attr);
-    }catch(e){
+    } catch (e) {
       return false;
     }
   }
