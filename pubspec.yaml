@@ -1,8 +1,8 @@
 name: flutter_split
-description: A new flutter plugin project.
-version: 0.0.3
-author:
+description: An unofficial Flutter plugin for Split.io Feature Flags, Dynamic Configuration, Experimentation + Continuous Delivery.
+version: 0.0.4
 homepage:
+repository: https://github.com/pruoo/flutter_split
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
